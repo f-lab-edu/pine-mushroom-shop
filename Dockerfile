@@ -10,6 +10,4 @@ RUN uv sync
 
 COPY . .
 
-WORKDIR /app/src
-
-CMD ["uv", "run", "fastapi", "run"]
+CMD ["uv", "run", "fastapi", "run", "src/main.py"]
