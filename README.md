@@ -140,6 +140,9 @@ flowchart LR
 ### Table ERD
 <img width="1901" height="998" alt="image" src="https://github.com/user-attachments/assets/b33b7642-61f1-499a-8488-dc0d4657f306" />
 
+### Table Definition Document
+- [테이블 정의서](https://docs.google.com/spreadsheets/d/15J84XUVwE1L5zgDj9VnxLLhqDx1wBpXzy57Fg623Rrg/edit?usp=sharing)
+
 ### How to test
 
 ```bash
