@@ -1,10 +1,14 @@
 import enum
 from datetime import date, datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import BigInteger, String, Boolean, Enum, Date, DateTime, Integer, func
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy.orm import mapped_column, Mapped, relationship
 
 from src.models.base import Base
+
+if TYPE_CHECKING:
+    from src.models.orders import Orders
 
 
 class MemberGender(str, enum.Enum):
@@ -39,4 +43,7 @@ class Member(Base):
     is_deleted: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False, onupdate=func.now()
     )
-    deleted_at: Mapped[datetime | None] = mapped_column(DateTime)
+    deleted_at: Mapped[datetime | None] = mapped_column(
+        DateTime, nullable=True, default=None
+    )
+    orders: Mapped[list["Orders"]] = relationship("Orders", back_populates="member")
