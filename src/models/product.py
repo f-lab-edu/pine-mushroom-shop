@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy import (
     BigInteger,
@@ -10,10 +11,13 @@ from sqlalchemy import (
     Boolean,
     UniqueConstraint,
 )
-from sqlalchemy.orm import Mapped
-from sqlalchemy.testing.schema import mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models.base import Base
+from src.models.orders import OrderProduct
+
+if TYPE_CHECKING:
+    from src.models.orders import OrderProduct
 
 
 class Product(Base):
@@ -43,4 +47,9 @@ class Product(Base):
         DateTime, nullable=False, default=func.now(), onupdate=func.now()
     )
     is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
-    deleted_at: Mapped[datetime] = mapped_column(DateTime)
+    deleted_at: Mapped[datetime | None] = mapped_column(
+        DateTime, nullable=True, default=None
+    )
+    order_product: Mapped[list["OrderProduct"]] = relationship(
+        "OrderProduct", back_populates="product"
+    )
