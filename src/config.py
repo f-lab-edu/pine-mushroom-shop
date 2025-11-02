@@ -1,11 +1,12 @@
-import os
-
 from pydantic import Field
 from pydantic_settings import BaseSettings
 
 
 class DatabaseConfig(BaseSettings):
-    url: str = Field(default=os.getenv("DATABASE_URL"), alias="DATABASE_URL")
+    url: str = Field(default="DATABASE_URL", alias="DATABASE_URL")
+    sqlalchemy_url: str = Field(
+        default="SQLALCHEMY_DATABASE_URL", alias="SQLALCHEMY_DATABASE_URL"
+    )
     echo: bool = Field(default=True, alias="DATABASE_ECHO")
 
 

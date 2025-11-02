@@ -12,6 +12,9 @@ services:
 
   app:
     image: leeanghoo2/pine-mushroom-shop:main
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/esonge
+      SQLALCHEMY_DATABASE_URL: postgresql://postgres:postgres@db:5432/esonge
     ports:
       - "8000:8000"
     depends_on:
