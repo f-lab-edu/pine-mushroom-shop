@@ -9,6 +9,7 @@ from src.models.base import Base
 if TYPE_CHECKING:
     from src.models.member import Member
     from src.models.product import Product
+    from src.models.payment import Payment
 
 
 class Orders(Base):
@@ -42,6 +43,7 @@ class Orders(Base):
         "OrderStatus", back_populates="orders"
     )
     member: Mapped["Member"] = relationship("Member", back_populates="orders")
+    payment: Mapped["Payment"] = relationship("Payment", back_populates="orders")
 
 
 class OrderProduct(Base):
