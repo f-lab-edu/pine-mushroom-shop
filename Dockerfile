@@ -1,14 +1,13 @@
-FROM python:3.11.7-slim as requirements-stage
+FROM python:3.14
 
-WORKDIR /tmp
-RUN pip install poetry
-COPY ./pyproject.toml ./poetry.lock* /tmp/
-RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
+WORKDIR /app
 
-FROM python:3.11.7-slim
+RUN pip install uv
 
-WORKDIR /code
-COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-COPY ./src /code/src
-CMD ["python", "src.main.py"]
+COPY pyproject.toml uv.lock ./
+
+RUN uv sync
+
+COPY . .
+
+CMD ["uv", "run", "fastapi", "run", "src/main.py"]

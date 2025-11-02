@@ -10,7 +10,7 @@ from src.models.post import Post
 
 
 async def handler(
-    session: Annotated[AsyncSession, Depends(get_session)]
+    session: Annotated[AsyncSession, Depends(get_session)],
 ) -> list[GetPostResponse]:
     posts = (await session.exec(select(Post))).all()
     return sorted(

@@ -1,3 +1,6 @@
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator
+
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlmodel import SQLModel, pool
 
@@ -20,3 +23,12 @@ async def create_db_and_tables() -> None:
 
 async def close_db() -> None:
     await engine.dispose()
+
+
+@asynccontextmanager
+async def database_manager() -> AsyncGenerator[None, None]:
+    await create_db_and_tables()
+    try:
+        yield
+    finally:
+        await close_db()
