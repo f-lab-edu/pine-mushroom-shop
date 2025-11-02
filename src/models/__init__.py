@@ -7,7 +7,7 @@ from src.models.coupon import (
 )
 from src.models.member import Member, PointsHistory
 from src.models.orders import Orders, OrderProduct, OrderStatus
-from src.models.payment import Payment, PaymentCancel
+from src.models.payment import Payment, PaymentCancel, PaymentStatus
 from src.models.product import Product
 
 
@@ -25,4 +25,5 @@ __all__ = [
     "PointsHistory",
     "Payment",
     "PaymentCancel",
+    "PaymentStatus",
 ]

@@ -82,3 +82,18 @@ class PaymentCancel(Base):
         "Payment", back_populates="payment_cancel"
     )
     member: Mapped["Member"] = relationship("Member", back_populates="payment_cancel")
+
+
+class PaymentStatus(Base):
+    __tablename__ = "payment_status"
+    # Columns
+    payment_status_id: Mapped[int] = mapped_column(
+        BigInteger, primary_key=True, autoincrement=True
+    )
+    payment_status_category: Mapped[str] = mapped_column(String(50), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, nullable=False, default=func.now()
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, nullable=False, default=func.now()
+    )
