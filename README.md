@@ -136,6 +136,15 @@ flowchart LR
   - Model Layer는 다른 Layer에 의존하지 않습니다.
 - 지금은 Layerd 아키텍처의 일부 예시일 뿐이므로, 필요에 따라 직접 아키텍처를 설계하고 구성해보세요!
   - 하지만 Layer간 의존성은 항상 한 쪽 방향으로 향해야 한다는 걸 명심해주시길 바랍니다.
+ 
+<img width="1526" height="718" alt="image" src="https://github.com/user-attachments/assets/8a71f3ca-578a-45ea-b4de-a443edb21cbd" />
+
+
+### Table ERD
+<img width="1901" height="998" alt="image" src="https://github.com/user-attachments/assets/b33b7642-61f1-499a-8488-dc0d4657f306" />
+
+### Table Definition Document
+- [테이블 정의서](https://docs.google.com/spreadsheets/d/15J84XUVwE1L5zgDj9VnxLLhqDx1wBpXzy57Fg623Rrg/edit?usp=sharing)
 
 ### How to test
 
