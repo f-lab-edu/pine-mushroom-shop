@@ -14,7 +14,6 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models.base import Base
-from src.models.orders import OrderProduct
 
 if TYPE_CHECKING:
     from src.models.orders import OrderProduct
