@@ -2,7 +2,17 @@ import enum
 from datetime import date, datetime
 from typing import TYPE_CHECKING
 
-from sqlalchemy import BigInteger, String, Boolean, Enum, Date, DateTime, Integer, func
+from sqlalchemy import (
+    BigInteger,
+    String,
+    Boolean,
+    Enum,
+    Date,
+    DateTime,
+    Integer,
+    func,
+    ForeignKey,
+)
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
 from src.models.base import Base
@@ -52,3 +62,26 @@ class Member(Base):
     member_coupon: Mapped[list["MemberCoupon"]] = relationship(
         "MemberCoupon", back_populates="member"
     )
+    points_history: Mapped[list["PointsHistory"]] = relationship(
+        "PointsHistory", back_populates="member"
+    )
+
+
+class PointsHistory(Base):
+    __tablename__ = "points_history"
+    # Columns
+    points_history_id: Mapped[int] = mapped_column(
+        BigInteger, primary_key=True, autoincrement=True
+    )
+    member_id: Mapped[int] = mapped_column(
+        BigInteger, ForeignKey("member.member_id"), nullable=False
+    )
+    previous_points_balance: Mapped[int] = mapped_column(Integer, nullable=False)
+    changed_amount: Mapped[int] = mapped_column(Integer, nullable=False)
+    current_points_balance: Mapped[int] = mapped_column(Integer, nullable=False)
+    changed_reason: Mapped[str] = mapped_column(String(50), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, nullable=False, default=func.now()
+    )
+    # Relationship
+    member: Mapped["Member"] = relationship("Member", back_populates="points_history")
