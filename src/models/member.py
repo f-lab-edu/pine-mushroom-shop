@@ -9,6 +9,7 @@ from src.models.base import Base
 
 if TYPE_CHECKING:
     from src.models.orders import Orders
+    from src.models.coupon import MemberCoupon
 
 
 class MemberGender(str, enum.Enum):
@@ -18,7 +19,7 @@ class MemberGender(str, enum.Enum):
 
 class Member(Base):
     __tablename__ = "member"
-
+    # Columns
     member_id: Mapped[int] = mapped_column(
         BigInteger, primary_key=True, autoincrement=True
     )
@@ -46,4 +47,8 @@ class Member(Base):
     deleted_at: Mapped[datetime | None] = mapped_column(
         DateTime, nullable=True, default=None
     )
+    # Relationship
     orders: Mapped[list["Orders"]] = relationship("Orders", back_populates="member")
+    member_coupon: Mapped[list["MemberCoupon"]] = relationship(
+        "MemberCoupon", back_populates="member"
+    )
