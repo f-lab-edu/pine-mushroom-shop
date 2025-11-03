@@ -1,10 +1,38 @@
+import os
+
 from pydantic import Field
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from enum import StrEnum
+
+
+class Environ(StrEnum):
+    PRD = "PRD"
+    DEV = "DEV"
+
+
+def get_env_file_name(env_key: str) -> str:
+    if not env_key:
+        env_key_normalized = Environ.DEV
+    else:
+        env_key_normalized = env_key if env_key.upper() in Environ else Environ.DEV
+
+    env_file_mapper: dict[Environ, str] = {
+        Environ.PRD: ".env",
+        Environ.DEV: ".env.dev",
+    }
+    return env_file_mapper.get(env_key_normalized, ".env.dev")
 
 
 class DatabaseConfig(BaseSettings):
-    url: str = Field(default="sqlite+aiosqlite:///./db.sqlite3", alias="DATABASE_URL")
+    url: str = Field(default="DATABASE_URL", alias="DATABASE_URL")
+    sqlalchemy_url: str = Field(
+        default="SQLALCHEMY_DATABASE_URL", alias="SQLALCHEMY_DATABASE_URL"
+    )
     echo: bool = Field(default=True, alias="DATABASE_ECHO")
+    model_config = SettingsConfigDict(
+        env_file=get_env_file_name(os.getenv("CONF_ENV")),
+        env_file_encoding="utf-8",
+    )
 
 
 class CORSConfig(BaseSettings):

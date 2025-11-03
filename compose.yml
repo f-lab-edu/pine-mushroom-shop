@@ -12,6 +12,9 @@ services:
 
   app:
     image: leeanghoo2/pine-mushroom-shop:main
+    environment:
+      - DATABASE_URL
+      - SQLALCHEMY_DATABASE_URL
     ports:
       - "8000:8000"
     depends_on:
