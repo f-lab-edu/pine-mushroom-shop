@@ -2,7 +2,7 @@ import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from src.database import engine, database_manager
+from src.database import async_engine, database_manager
 from src.main import app
 
 
@@ -19,5 +19,5 @@ async def client() -> AsyncClient:
 
 @pytest_asyncio.fixture(scope="function")
 async def session() -> AsyncSession:
-    async with AsyncSession(engine) as session:
+    async with AsyncSession(async_engine) as session:
         yield session
