@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING
 from sqlalchemy import BigInteger, String, Integer, DateTime, func, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.models.base import Base
+from src.db.models.base import Base
 
 if TYPE_CHECKING:
-    from src.models.member import Member
+    from src.db.models.member import Member
 
 
 class Coupon(Base):

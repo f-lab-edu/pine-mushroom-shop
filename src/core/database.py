@@ -4,8 +4,8 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlmodel import pool
 
-from src import config
-from src.models import Base
+from src.core import config
+from src.db import Base
 
 async_engine = create_async_engine(
     url=config.db.url,

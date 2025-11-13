@@ -52,7 +52,7 @@ CORS_METHODS="*"
 CORS_HEADERS="*"
 ```
 
-관련 코드는 [`config.py`](./src/config.py)에서 확인할 수 있습니다.
+관련 코드는 [`config.py`](src/core/config.py)에서 확인할 수 있습니다.
 
 ## How to develop
 
@@ -85,7 +85,7 @@ make install-dev
 │   ├── config.py                  # 프로젝트 설정과 관련된 파일
 │   ├── database.py                # 데이터베이스와 관련된 파일
 │   ├── main.py                    # 프로젝트의 시작 로직을 담은 파일
-│   ├── models                     # 모델 Layer에 속하는 모듈 파일들
+│   ├── db                     # 모델 Layer에 속하는 모듈 파일들
 │   │   └── post.py
 └── tests                          # 테스트 파일들
     └── apis                       # API Layer에 속하는 모듈을 테스트 하는 파일들

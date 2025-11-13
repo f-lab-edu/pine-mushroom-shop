@@ -5,10 +5,11 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src import config
+from src.core import config
 from src.apis.common import common_router
 from src.apis import router as api_router
-from src.database import close_db, create_db_and_tables
+from src.core.database import close_db, create_db_and_tables
+from src.core.middleware import LoggingMiddleWare
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -26,6 +27,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.include_router(common_router)
 app.include_router(api_router)
+app.add_middleware(LoggingMiddleWare)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=config.cors.origins.split(","),

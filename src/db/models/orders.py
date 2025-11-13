@@ -4,13 +4,13 @@ from typing import TYPE_CHECKING
 from sqlalchemy import BigInteger, ForeignKey, String, DateTime, func, Boolean, Integer
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 
-from src.models.base import Base
+from src.db.models.base import Base
 
 if TYPE_CHECKING:
-    from src.models.member import Member
-    from src.models.product import Product
-    from src.models.payment import Payment
-    from src.models.shipping import Shipping
+    from src.db.models.member import Member
+    from src.db.models.product import Product
+    from src.db.models.payment import Payment
+    from src.db.models.shipping import Shipping
 
 
 class Orders(Base):

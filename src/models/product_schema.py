@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from enum import StrEnum
 
 
@@ -37,3 +37,5 @@ class ProductCreate(BaseModel):
 class ProductResponse(BaseModel):
     product_id: int
     created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)

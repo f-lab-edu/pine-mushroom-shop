@@ -3,8 +3,8 @@ from datetime import datetime
 from sqlalchemy import BigInteger, ForeignKey, String, DateTime, func, Boolean
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
-from src.models import Orders
-from src.models.base import Base
+from src.db import Orders
+from src.db.models.base import Base
 
 
 class Shipping(Base):

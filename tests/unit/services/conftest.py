@@ -1,7 +1,7 @@
 import pytest
 
-from src.models import Product
-from src.schemas.product_schema import ProductCreate, ProductCategory, ProductStatus
+from src.db import Product
+from src.models.product_schema import ProductCreate, ProductCategory, ProductStatus
 
 
 @pytest.fixture(scope="function")

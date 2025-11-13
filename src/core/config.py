@@ -32,6 +32,7 @@ class DatabaseConfig(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=get_env_file_name(os.getenv("CONF_ENV")),
         env_file_encoding="utf-8",
+        extra="ignore",
     )
 
 
@@ -47,6 +48,21 @@ class WebConfig(BaseSettings):
     port: int = Field(default=8000, alias="WEB_PORT")
 
 
+class LoggingConfig(BaseSettings):
+    level: str = Field(default="INFO", alias="LOG_LEVEL")
+    format: str = Field(
+        default="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        alias="LOG_FORMAT",
+    )
+
+    model_config = SettingsConfigDict(
+        env_file=get_env_file_name(os.getenv("CONF_ENV")),
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+
 db = DatabaseConfig()
 cors = CORSConfig()
 web = WebConfig()
+log = LoggingConfig()

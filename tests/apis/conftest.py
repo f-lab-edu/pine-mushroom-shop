@@ -2,7 +2,7 @@ import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
 from sqlmodel.ext.asyncio.session import AsyncSession
 
-from src.database import async_engine, database_manager
+from src.core.database import async_engine, database_manager
 from src.main import app
 
 

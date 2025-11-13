@@ -15,12 +15,12 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
-from src.models.base import Base
+from src.db.models.base import Base
 
 if TYPE_CHECKING:
-    from src.models.orders import Orders
-    from src.models.coupon import MemberCoupon
-    from src.models.payment import Payment, PaymentCancel
+    from src.db.models.orders import Orders
+    from src.db.models.coupon import MemberCoupon
+    from src.db.models.payment import Payment, PaymentCancel
 
 
 class MemberGender(str, enum.Enum):

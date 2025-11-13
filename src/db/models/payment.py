@@ -13,11 +13,11 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.models.base import Base
+from src.db.models.base import Base
 
 if TYPE_CHECKING:
-    from src.models.orders import Orders
-    from src.models.member import Member
+    from src.db.models.orders import Orders
+    from src.db.models.member import Member
 
 
 class Payment(Base):
