@@ -10,6 +10,7 @@ from sqlalchemy import (
     func,
     Boolean,
     UniqueConstraint,
+    Index,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -25,6 +26,21 @@ class Product(Base):
     __table_args__ = (
         UniqueConstraint(
             "product_name", "seller", "origin", name="uq_product_seller_origin"
+        ),
+        Index(
+            "idx_product_category_created_pid",
+            "is_deleted",
+            "product_status",
+            "category",
+            "created_at",
+            "product_id",
+        ),
+        Index(
+            "idx_product_created_pid",
+            "is_deleted",
+            "product_status",
+            "created_at",
+            "product_id",
         ),
     )
 
