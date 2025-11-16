@@ -34,8 +34,22 @@ class ProductCreate(BaseModel):
     description: str | None = Field(None, description="상품에 대한 상세 설명")
 
 
+class ProductCreateResponse(BaseModel):
+    product_id: int
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class ProductResponse(BaseModel):
     product_id: int
+    product_name: str
+    seller: str
+    origin: str
+    category: ProductCategory
+    product_price: int
+    stock_quantity: int
+    description: str | None
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
