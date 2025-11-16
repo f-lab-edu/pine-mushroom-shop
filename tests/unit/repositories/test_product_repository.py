@@ -52,3 +52,26 @@ async def test_get_products_success(
         assert call_args.kwargs["params"] == sample_cursor_params
 
         assert products == sample_read_product
+
+
+@pytest.mark.asyncio
+async def test_get_product_by_id_success(saved_product: Product):
+    # given
+    product_id = 1
+    mock_db = AsyncMock()
+    mock_result = MagicMock()
+    mock_result.scalar_one_or_none.return_value = saved_product
+    mock_db.execute.return_value = mock_result
+    mock_repository = ProductRepository(mock_db)
+
+    # when
+    product = await mock_repository.get_product_by_id(product_id)
+
+    # then
+    mock_db.execute.assert_called_once()
+    args, kwargs = mock_db.execute.call_args
+    stmt = args[0]
+    assert stmt is not None
+
+    mock_result.scalar_one_or_none.assert_called_once_with()
+    assert product == saved_product

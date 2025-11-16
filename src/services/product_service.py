@@ -36,3 +36,14 @@ class ProductService:
             products = await self.product_repository.get_products(params)
 
         return products
+
+    async def get_product_by_id(self, product_id: int) -> Product | None:
+        try:
+            product = await self.product_repository.get_product_by_id(product_id)
+        except DatabaseConnectionError:
+            logger.warning(
+                "데이터 베이스 연결 오류가 발생했습니다. 상품 조회를 재시도합니다."
+            )
+            product = await self.product_repository.get_product_by_id(product_id)
+
+        return product

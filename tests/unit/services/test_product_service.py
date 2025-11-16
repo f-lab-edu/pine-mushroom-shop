@@ -39,3 +39,19 @@ async def test_get_products(
     # then
     mock_repository.get_products.assert_called_once_with(sample_cursor_params)
     assert result == sample_read_product
+
+
+@pytest.mark.asyncio
+async def test_get_product_by_id_success(saved_product: Product) -> Product | None:
+    # given
+    product_id = 1
+    mock_repository = AsyncMock(spec=ProductRepository)
+    mock_repository.get_product_by_id.return_value = saved_product
+    product_service = ProductService(product_repository=mock_repository)
+
+    # when
+    product = await product_service.get_product_by_id(product_id)
+
+    # then
+    mock_repository.get_product_by_id.assert_called_once_with(product_id)
+    assert product == saved_product

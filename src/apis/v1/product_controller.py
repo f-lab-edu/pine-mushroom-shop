@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi_pagination.cursor import CursorParams, CursorPage
 
 from src.core.logging_config import logger
+from src.db import Product
 from src.errors.exceptions import ProductAlreadyExists
 from src.models.product_schema import (
     ProductCreate,
@@ -36,7 +37,7 @@ async def create_product(
 async def get_products(
     param: CursorParams = Depends(),
     product_service: ProductService = Depends(ProductService),
-) -> CursorPage[ProductResponse]:
+) -> CursorPage[Product]:
     products = await product_service.get_products(param)
     if products is None:
         raise HTTPException(
@@ -45,3 +46,18 @@ async def get_products(
         )
 
     return products
+
+
+@router.get(
+    "/{product_id}", response_model=ProductResponse, status_code=status.HTTP_200_OK
+)
+async def get_product_by_id(
+    product_id: int, product_service: ProductService = Depends(ProductService)
+) -> ProductResponse:
+    product = await product_service.get_product_by_id(product_id)
+    if product is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="죄송합니다. 해당 상품을 찾을 수 없습니다.",
+        )
+    return ProductResponse.model_validate(product)

@@ -56,3 +56,13 @@ class ProductRepository:
             raise e
 
         return products
+
+    async def get_product_by_id(self, product_id: int) -> Product | None:
+        stmt = select(Product).where(Product.product_id == product_id)
+        try:
+            product = await self.db.execute(stmt)
+        except DatabaseConnectionError as e:
+            logger.error(f"데이터 베이스 연결 오류: {str(e)}")
+            raise e
+
+        return product.scalar_one_or_none()
