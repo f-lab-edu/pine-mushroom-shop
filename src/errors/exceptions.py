@@ -12,3 +12,7 @@ class DatabaseConnectionError(DatabaseError):
 
 class ProductAlreadyExists(DatabaseError):
     pass
+
+
+class ProductNotFound(ApplicationError):
+    pass

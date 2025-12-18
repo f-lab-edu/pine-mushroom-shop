@@ -53,3 +53,19 @@ class ProductResponse(BaseModel):
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class ProductUpdate(BaseModel):
+    product_name: str | None = None
+    seller: str | None = None
+    origin: str | None = None
+    category: ProductCategory | None = None
+    product_status: ProductStatus | None = None
+    product_price: int | None = None
+    product_quantity: int | None = None
+    description: str | None = None
+
+
+class ProductUpdateResponse(ProductResponse):
+    product_status: ProductStatus
+    updated_at: datetime

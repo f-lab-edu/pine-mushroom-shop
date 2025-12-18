@@ -1,3 +1,4 @@
+from typing import Any
 from fastapi import Depends
 from fastapi_pagination.ext.sqlalchemy import paginate
 from fastapi_pagination.cursor import CursorParams, CursorPage
@@ -66,3 +67,19 @@ class ProductRepository:
             raise e
 
         return product.scalar_one_or_none()
+
+    async def update_product(self, product_id: int, updated_data: dict[str, Any]):
+        stmt = select(Product).where(Product.product_id == product_id)
+        result = await self.db.execute(stmt)
+        product = result.scalar_one_or_none()
+
+        if product is None:
+            return None
+
+        for field, value in updated_data.items():
+            setattr(product, field, value)
+
+        await self.db.flush()
+        await self.db.refresh(product)
+
+        return product

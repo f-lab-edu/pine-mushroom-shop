@@ -1,10 +1,11 @@
+from typing import Any
 from fastapi import Depends
 from fastapi_pagination.cursor import CursorParams, CursorPage
 
 from src.errors.exceptions import DatabaseConnectionError
 from src.db.models.product import Product
 from src.repositories.product_repository import ProductRepository
-from src.models.product_schema import ProductCreate
+from src.models.product_schema import ProductCreate, ProductUpdateResponse
 
 from src.core.logging_config import logger
 
@@ -47,3 +48,7 @@ class ProductService:
             product = await self.product_repository.get_product_by_id(product_id)
 
         return product
+
+    async def update_product_by_id(self, product_id: int, updated_data: dict[str, Any]):
+        result = await self.product_repository.update_product(product_id, updated_data)
+        return ProductUpdateResponse.model_validate(result, from_attributes=True)

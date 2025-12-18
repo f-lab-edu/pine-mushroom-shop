@@ -3,11 +3,13 @@ from fastapi_pagination.cursor import CursorParams, CursorPage
 
 from src.core.logging_config import logger
 from src.db import Product
-from src.errors.exceptions import ProductAlreadyExists
+from src.errors.exceptions import ProductAlreadyExists, ProductNotFound
 from src.models.product_schema import (
     ProductCreate,
     ProductCreateResponse,
     ProductResponse,
+    ProductUpdate,
+    ProductUpdateResponse,
 )
 from src.services.product_service import ProductService
 
@@ -61,3 +63,23 @@ async def get_product_by_id(
             detail="죄송합니다. 해당 상품을 찾을 수 없습니다.",
         )
     return ProductResponse.model_validate(product)
+
+
+@router.patch(
+    "/{product_id}",
+    response_model=ProductUpdateResponse,
+    status_code=status.HTTP_200_OK,
+)
+async def update_product_by_id(
+    product_id: int,
+    product_update: ProductUpdate,
+    product_service=Depends(ProductService),
+) -> ProductUpdateResponse:
+    updated_data = product_update.model_dump(exclude_unset=True)
+    try:
+        return await product_service.update_product_by_id(product_id, updated_data)
+    except ProductNotFound:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="죄송합니다. 해당 삼품을 찾을 수 없습니다.",
+        )
