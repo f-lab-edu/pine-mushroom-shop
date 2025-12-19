@@ -49,6 +49,8 @@ class ProductService:
 
         return product
 
-    async def update_product_by_id(self, product_id: int, updated_data: dict[str, Any]):
+    async def update_product_by_id(
+        self, product_id: int, updated_data: dict[str, Any]
+    ) -> ProductUpdateResponse:
         result = await self.product_repository.update_product(product_id, updated_data)
         return ProductUpdateResponse.model_validate(result, from_attributes=True)

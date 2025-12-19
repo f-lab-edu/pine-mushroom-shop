@@ -68,7 +68,9 @@ class ProductRepository:
 
         return product.scalar_one_or_none()
 
-    async def update_product(self, product_id: int, updated_data: dict[str, Any]):
+    async def update_product(
+        self, product_id: int, updated_data: dict[str, Any]
+    ) -> Product | None:
         stmt = select(Product).where(Product.product_id == product_id)
         result = await self.db.execute(stmt)
         product = result.scalar_one_or_none()
